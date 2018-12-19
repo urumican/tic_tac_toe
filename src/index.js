@@ -1,68 +1,58 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'
+import 'antd/dist/antd.css';
+import './index.css';
+import { Menu, Icon, Button, Dropdown, Select, Popover  } from 'antd';
 
-class Square extends React.Component {
-    render() {
-      return (
-        <button className="square">
-          {/* TODO */}
-        </button>
-      );
-    }
+const SubMenu = Menu.SubMenu;
+const Option = Select.Option
+
+class App extends React.Component {
+  state = {
+    collapsed: true,
   }
-  
-  class Board extends React.Component {
-    renderSquare(i) {
-      return <Square />;
-    }
-  
-    render() {
-      const status = 'Next player: X';
-  
-      return (
-        <div>
-          <div className="status">{status}</div>
-          <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-          </div>
-        </div>
-      );
-    }
+
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
   }
-  
-  class Game extends React.Component {
-    render() {
-      return (
-        <div className="game">
-          <div className="game-board">
-            <Board />
-          </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
-        </div>
-      );
-    }
+
+  handleChange = (value)=> {
+    console.log(`selected ${value}`);
   }
-  
-  // ========================================
-  
-  ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-  );
-  
+
+  getMenu = () => {
+    return (
+      <Menu>
+        <Menu.Item key="setting:1">Option 1</Menu.Item>
+        <Menu.Item key="setting:2">Option 2</Menu.Item>
+      </Menu>
+    )
+  }
+
+  getContent = () => {
+    let menu = this.getMenu()
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <Button style={{ marginLeft: 8 }}>
+          Button <Icon type="down" />
+        </Button>
+      </Dropdown>
+    )
+  }
+
+  render() {
+    let content = this.getContent()
+
+    return (
+      <div>
+        <Popover placement="rightTop" title={'text'} content={content} trigger="click">
+          <Button>RT</Button>
+        </Popover>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
