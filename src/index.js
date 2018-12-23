@@ -24,7 +24,7 @@ class App extends React.Component {
 
   getMenu = () => {
     return (
-      <Menu>
+      <Menu theme='dark'>
         <Menu.Item key="setting:1">Option 1</Menu.Item>
         <Menu.Item key="setting:2">Option 2</Menu.Item>
       </Menu>
@@ -45,11 +45,18 @@ class App extends React.Component {
   render() {
     let content = this.getContent()
 
+    let items = []
+    for (let i = 0; i < 1000; i++) {
+      items.push(<div id={"btn-" + i} style={{position:"static"}}><Popover placement="rightTop" title={'text'} content={content} trigger="click"
+      getPopupContainer={function() {
+        return document.getElementById('btn-' + i)
+      }} style={{position: "static"}} id={"popup-"+i}>
+      <Button size="small" type='primary'><Icon type='setting'/>RT</Button>
+    </Popover></div>)
+    }
     return (
-      <div>
-        <Popover placement="rightTop" title={'text'} content={content} trigger="click">
-          <Button>RT</Button>
-        </Popover>
+      <div className="lab" style={{overflow:"scroll", display: "flex", height:500}}>
+        {items}
       </div>
     );
   }

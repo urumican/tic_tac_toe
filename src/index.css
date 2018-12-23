@@ -2,6 +2,10 @@ body {
     font: 14px "Century Gothic", Futura, sans-serif;
     margin: 20px;
   }
+
+  .lab {
+    flex-direction: column
+  }
   
   ol, ul {
     padding-left: 30px;
